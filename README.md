@@ -2,6 +2,15 @@
 Repository used to develop the project of SDN controllers
 
 
+Mininet installation and setup:
+http://mininet.org/vm-setup-notes/
+
+To install GUI in the VM run the command:
+sudo tasksel install ubuntu-desktop-minimal
+
+Follow the Mininet Walkthrough to get use with the application:
+http://mininet.org/walkthrough/
+
 Tuturial using ODL (OpenDayLight) SDN controller with mininet emulator:
 https://www.brianlinkletter.com/2016/02/using-the-opendaylight-sdn-controller-with-the-mininet-network-emulator/
 
