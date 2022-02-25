@@ -1,6 +1,11 @@
 # PI-II_SDN
 Repository used to develop the project of SDN controllers
 
+### SDN general topics:
+
+Introduction to SDN:
+https://networklessons.com/cisco/ccna-routing-switching-icnd2-200-105/introduction-to-sdn-software-defined-networking
+
 ### Mininet emulator:
 
 Mininet installation and setup:
