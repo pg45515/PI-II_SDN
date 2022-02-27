@@ -25,6 +25,14 @@ Tuturial using POX (python) SDN Controller with Mininet: https://www.brianlinkle
 
 https://ryu.readthedocs.io/en/latest/index.html
 
+### VM image (Virtual Box): https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/ET2CoWn3LUZMkg2zTSz53o8Brm2Lo10lz27n8MoJUbeH5Q?e=LtJdJE
+
+Fedora 35 linux with:
+ * Mininet 2.3.0
+ * POX
+ * Ryu
+ * Visual Studio code
+ 
 ### OpenDayLight SDN Controller:
 
 Tuturial using ODL (OpenDayLight) SDN controller with mininet emulator:
