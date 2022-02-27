@@ -1,5 +1,5 @@
 # PI-II_SDN
-Repository used to develop the project of SDN controllers
+Repository used to develop the project of Communications Project II curricular unit
 
 ### SDN general topics:
 
