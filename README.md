@@ -34,6 +34,7 @@ Fedora 35 linux with:
  * POX
  * Ryu
  * Visual Studio code
+ * 4GB of size
  
 ### OpenDayLight SDN Controller:
 
