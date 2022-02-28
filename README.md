@@ -29,6 +29,8 @@ https://ryu.readthedocs.io/en/latest/index.html
 
 https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/ET2CoWn3LUZMkg2zTSz53o8Brm2Lo10lz27n8MoJUbeH5Q?e=LtJdJE
 
+password: uminho
+
 Fedora 35 linux with:
  * Mininet 2.3.0
  * POX
