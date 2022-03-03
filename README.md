@@ -33,6 +33,13 @@ password: uminho
 
 Fedora 35 linux with:
  * Mininet 2.3.0
+
+
+
+## Only in case to choose ML traffic detection:
+
+https://www.youtube.com/watch?v=qyX_RGQsw6E
+https://github.com/a9khan/trafficclassifier
  * POX
  * Ryu
  * Visual Studio code
