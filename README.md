@@ -33,13 +33,6 @@ password: uminho
 
 Fedora 35 linux with:
  * Mininet 2.3.0
-
-
-
-## Only in case to choose ML traffic detection:
-
-https://www.youtube.com/watch?v=qyX_RGQsw6E
-https://github.com/a9khan/trafficclassifier
  * POX
  * Ryu
  * Visual Studio code
@@ -53,3 +46,9 @@ https://www.brianlinkletter.com/2016/02/using-the-opendaylight-sdn-controller-wi
 Tutorial using OpenDayLight GUI: https://networklessons.com/cisco/ccna-routing-switching-icnd2-200-105/introduction-to-sdn-opendaylight
 
 MiniEdit, GUI for Mininet: https://www.brianlinkletter.com/2015/04/how-to-use-miniedit-mininets-graphical-user-interface/
+
+
+## Only in case to choose ML traffic detection:
+
+Video explained: https://www.youtube.com/watch?v=qyX_RGQsw6E
+Repository used in the video: https://github.com/a9khan/trafficclassifier
