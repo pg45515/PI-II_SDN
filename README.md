@@ -8,7 +8,7 @@ https://networklessons.com/cisco/ccna-routing-switching-icnd2-200-105/introducti
 
 ### VM image (Virtual Box): 
 
-https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/ET2CoWn3LUZMkg2zTSz53o8Brm2Lo10lz27n8MoJUbeH5Q?e=LtJdJE
+https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/EUobulazcKdPo9VWy6h6mVcBCUXDgSMm2Nz_GkCOCNRvrg?e=SSzWbo
 
 password: uminho
 
