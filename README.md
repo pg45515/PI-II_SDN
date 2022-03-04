@@ -6,6 +6,19 @@ Repository used to develop the project of Communications Project II curricular u
 Introduction to SDN:
 https://networklessons.com/cisco/ccna-routing-switching-icnd2-200-105/introduction-to-sdn-software-defined-networking
 
+### VM image (Virtual Box): 
+
+https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/ET2CoWn3LUZMkg2zTSz53o8Brm2Lo10lz27n8MoJUbeH5Q?e=LtJdJE
+
+password: uminho
+
+Fedora 35 linux with:
+ * Mininet 2.3.0
+ * POX
+ * Ryu
+ * Visual Studio code
+ * 4GB of size
+
 ### Mininet emulator:
 
 Mininet installation and setup:
@@ -16,10 +29,6 @@ sudo tasksel install ubuntu-desktop-minimal
 
 Follow the Mininet Walkthrough to get use with the application:
 http://mininet.org/walkthrough/
-
-### POX SDN Controller:
-
-Tuturial using POX (python) SDN Controller with Mininet: https://www.brianlinkletter.com/2015/04/using-the-pox-sdn-controller/
 
 ### Ryu SDN Controller:
 
@@ -35,18 +44,10 @@ Framework documentation:
 
 https://book.ryu-sdn.org/en/Ryubook.pdf
 
-### VM image (Virtual Box): 
+### POX SDN Controller:
 
-https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/ET2CoWn3LUZMkg2zTSz53o8Brm2Lo10lz27n8MoJUbeH5Q?e=LtJdJE
+Tuturial using POX (python) SDN Controller with Mininet: https://www.brianlinkletter.com/2015/04/using-the-pox-sdn-controller/
 
-password: uminho
-
-Fedora 35 linux with:
- * Mininet 2.3.0
- * POX
- * Ryu
- * Visual Studio code
- * 4GB of size
  
 ### OpenDayLight SDN Controller:
 
