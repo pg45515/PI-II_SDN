@@ -21,8 +21,7 @@ Fedora 35 linux with:
 
 ### Mininet emulator:
 
-Mininet installation and setup:
-http://mininet.org/vm-setup-notes/
+Mininet installation and setup: http://mininet.org/vm-setup-notes/
 
 To install GUI in the VM run the command:
 sudo tasksel install ubuntu-desktop-minimal
@@ -32,17 +31,13 @@ http://mininet.org/walkthrough/
 
 ### Ryu SDN Controller:
 
-Overview:
+Overview: https://ryu.readthedocs.io/en/latest/index.html
 
-https://ryu.readthedocs.io/en/latest/index.html
+Introduction: https://ryu-sdn.org/slides/ONS2013-april-ryu-intro.pdf
 
-Introduction:
+Framework documentation: https://book.ryu-sdn.org/en/Ryubook.pdf
 
-https://ryu-sdn.org/slides/ONS2013-april-ryu-intro.pdf
-
-Framework documentation:
-
-https://book.ryu-sdn.org/en/Ryubook.pdf
+GitHub: https://github.com/faucetsdn/ryu
 
 ### POX SDN Controller:
 
