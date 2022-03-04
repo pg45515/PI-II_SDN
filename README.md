@@ -12,12 +12,12 @@ https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/ET2CoWn3LUZ
 
 password: uminho
 
-Fedora 35 linux with:
+Fedora 34 linux with:
  * Mininet 2.3.0
- * POX
  * Ryu
+ * WireShark
  * Visual Studio code
- * 4GB of size
+ * 3.8 GB of size
 
 ### Mininet emulator:
 
