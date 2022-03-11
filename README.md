@@ -39,6 +39,8 @@ Framework documentation: https://book.ryu-sdn.org/en/Ryubook.pdf
 
 GitHub: https://github.com/faucetsdn/ryu
 
+Programming a simple switch (starting at 10 minutes): https://www.youtube.com/watch?v=2VRsituJ6a8
+
 ### POX SDN Controller:
 
 Tuturial using POX (python) SDN Controller with Mininet: https://www.brianlinkletter.com/2015/04/using-the-pox-sdn-controller/
