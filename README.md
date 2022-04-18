@@ -3,11 +3,11 @@ Repository used to develop the project of Communications Project II curricular u
 
 ### Run the code
 
-Start some topology with multiple switches with mininet
+1. Start some topology with multiple switches with mininet
 
-run some controller with the monitor code
+2. Run some controller with the monitor code together
 
-```ryu-manager code/tp1_ex1_layer2_controller.py code/monitor_api.py```
+```ryu-manager tp1_ex1_layer2_controller.py monitor_api.py```
 
 Open your browser at the URL 
 
