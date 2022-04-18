@@ -1,6 +1,20 @@
 # PI-II_SDN
 Repository used to develop the project of Communications Project II curricular unit
 
+### Run the code
+
+Start some topology with multiple switches with mininet
+
+run some controller with the monitor code
+
+```ryu-manager code/tp1_ex1_layer2_controller.py code/monitor_api.py```
+
+Open your browser at the URL 
+
+```http://127.0.0.1:8080/stats/switches```
+
+to check all the switches you have in your topology. Check the code comments for others URI endpoints
+
 ### VM image (Virtual Box): 
 
 https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/EUobulazcKdPo9VWy6h6mVcBCUXDgSMm2Nz_GkCOCNRvrg?e=SSzWbo
