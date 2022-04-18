@@ -1,6 +1,5 @@
 import logging
 import json
-import ast
 
 from ryu.base import app_manager
 from ryu.controller import ofp_event
@@ -39,7 +38,7 @@ def monitor_method(method):
             LOG.error('No such Datapath: %s', dpid)
             return Response(status=404)
 
-        # Get lib/ofctl_* module
+        # Check OpenFlow 1.3 support
         try:
             ofctl = supported_ofctl.get(dp.ofproto.OFP_VERSION)
         except KeyError:
@@ -47,7 +46,7 @@ def monitor_method(method):
                           dp.ofproto.OFP_VERSION)
             return Response(status=501)
 
-        # Invoke StatsController method
+        # Invoke MonitorController method
         try:
             ret = method(self, req, dp, ofctl, *args, **kwargs)
             return Response(content_type='application/json',
@@ -68,7 +67,7 @@ class MonitorController(ControllerBase):
         self.dpset = data['dpset']
         self.waiters = data['waiters']
 
-    def get_dpids(self, req, **_kwargs):
+    def get_switches(self, req, **_kwargs):
         dps = list(self.dpset.dps.keys())
         body = json.dumps(dps)
         return Response(content_type='application/json', body=body)
@@ -80,24 +79,15 @@ class MonitorController(ControllerBase):
         return tmp_sw_details[sw_id]
 
     @monitor_method
-    def get_sw_flow_details(self, req, dp, ofctl, **kwargs):
-        flow = req.json if req.body else {}
-        tmp_flow_details = ofctl.get_flow_desc(dp, self.waiters, flow)
-        sw_id = list(tmp_flow_details.keys())[0]
-        #return tmp_flow_details[sw_id]
-        return ofctl.get_flow_desc(dp, self.waiters, flow)
-
-    @monitor_method
-    def get_sw_flow(self, req, dp, ofctl, **kwargs):
+    def get_sw_flows(self, req, dp, ofctl, **kwargs):
         flow = req.json if req.body else {}
         tmp_flows = ofctl.get_flow_stats(dp, self.waiters, flow)
         sw_flows = sw_id = list(tmp_flows.keys())[0]
         return tmp_flows[sw_flows][0]
-
         #return ofctl.get_flow_stats(dp, self.waiters, flow)
 
     @monitor_method
-    def get_aggregate_flow_stats(self, req, dp, ofctl, **kwargs):
+    def get_flows_stats(self, req, dp, ofctl, **kwargs):
         flow = req.json if req.body else {}
         return ofctl.get_aggregate_flow_stats(dp, self.waiters, flow)
 
@@ -106,75 +96,29 @@ class MonitorController(ControllerBase):
         return ofctl.get_table_stats(dp, self.waiters)
 
     @monitor_method
-    def get_port_stats(self, req, dp, ofctl, port=None, **kwargs):
-        if port == "ALL":
-            port = None
-        tmp_port_stats = ofctl.get_port_stats(dp, self.waiters, port)
-        #print(type(tmp_port_stats))
-        #print(tmp_port_stats['1'][0])
-        tmp_sw_port = ofctl.get_port_stats(dp, self.waiters, port)
+    def get_sw_ports(self, req, dp, ofctl, **kwargs):
+        tmp_sw_port = ofctl.get_port_stats(dp, self.waiters, None)
         sw_id = list(tmp_sw_port.keys())[0]
-        return tmp_sw_port[sw_id][0]
-        #try:
-        #    return tmp_port_stats['1'][0]
-        #except IndexError:
-        #    return {port: 'no data'}
-
+        return tmp_sw_port[sw_id]
         #return ofctl.get_port_stats(dp, self.waiters, port)
 
     @monitor_method
-    def get_ports_stats(self, req, dp, ofctl, port=None, **kwargs):
-        #if port == "ALL":
-        #    port = None
-        #tmp_port_stats = ofctl.get_port_stats(dp, self.waiters, port)
-        #print(type(tmp_port_stats))
-        #print(tmp_port_stats['1'][0])
-        #tmp_sw_port = ofctl.get_port_stats(dp, self.waiters, port)
-        #sw_id = list(tmp_sw_port.keys())[0]
-        #return tmp_sw_port[sw_id][0]
-        #try:
-        #    return tmp_port_stats['1'][0]
-        #except IndexError:
-        #    return {port: 'no data'}
-
-        return ofctl.get_port_stats(dp, self.waiters, None)
+    def get_sw_port(self, req, dp, ofctl, port=None, **kwargs):
+        tmp_sw_port = ofctl.get_port_stats(dp, self.waiters, port)
+        sw_id = list(tmp_sw_port.keys())[0]
+        return tmp_sw_port[sw_id][0]
+        #return ofctl.get_port_stats(dp, self.waiters, None)
 
     @monitor_method
-    def get_port_desc(self, req, dp, ofctl, port_no=None, **kwargs):
-        tmp_port_detail = ofctl.get_port_desc(dp, self.waiters, port_no)
-
-        #return ofctl.get_port_desc(dp, self.waiters, port_no)
+    def get_sw_ports_details(self, req, dp, ofctl, **kwargs):
+        return ofctl.get_port_desc(dp, self.waiters, None)
 
     @monitor_method
-    def get_queue_stats(self, req, dp, ofctl,
-                        port=None, queue_id=None, **kwargs):
-        if port == "ALL":
-            port = None
+    def get_sw_port_details(self, req, dp, ofctl, port, **kwargs):
+        return ofctl.get_port_desc(dp, self.waiters, port)
 
-        if queue_id == "ALL":
-            queue_id = None
 
-        return ofctl.get_queue_stats(dp, self.waiters, port, queue_id)
-
-    @monitor_method
-    def get_queue_config(self, req, dp, ofctl, port=None, **kwargs):
-        if port == "ALL":
-            port = None
-
-        return ofctl.get_queue_config(dp, self.waiters, port)
-
-    @monitor_method
-    def get_queue_desc(self, req, dp, ofctl,
-                       port=None, queue=None, **_kwargs):
-        if port == "ALL":
-            port = None
-
-        if queue == "ALL":
-            queue = None
-
-        return ofctl.get_queue_desc(dp, self.waiters, port, queue)
-
-class RestStatsApi(app_manager.RyuApp):
+class RestMonitorApi(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
     _CONTEXTS = {
         'dpset': dpset.DPSet,
@@ -182,7 +126,7 @@ class RestStatsApi(app_manager.RyuApp):
     }
 
     def __init__(self, *args, **kwargs):
-        super(RestStatsApi, self).__init__(*args, **kwargs)
+        super(RestMonitorApi, self).__init__(*args, **kwargs)
         self.dpset = kwargs['dpset']
         wsgi = kwargs['wsgi']
         self.waiters = {}
@@ -198,126 +142,50 @@ class RestStatsApi(app_manager.RyuApp):
         # GET /monitor/switches - list all switches
         uri = path + '/switches'
         mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_dpids',
+                       controller=MonitorController, action='get_switches',
                        conditions=dict(method=['GET']))
 
-        # GET /monitor/details/<dpid> - summary details of switch 
-        uri = path + '/details/{dpid}'
+        # GET /monitor/switch/detail/<dpid> - summary details of switch 
+        uri = path + '/switch/{dpid}/details'
         mapper.connect('monitor', uri,
                        controller=MonitorController, action='get_sw_details',
                        conditions=dict(method=['GET']))
 
-        # GET /monitor/flowdetails/<dpid> - flows details of switch
-        uri = path + '/flowdetails/{dpid}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_sw_flow_details',
-                       conditions=dict(method=['GET', 'POST']))
-
-        # GET /monitor/flow/<dpid> - flow of the switch
-        uri = path + '/flow/{dpid}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_sw_flow',
-                       conditions=dict(method=['GET', 'POST']))
-
-        # GET /stats/aggregateflow/<dpid> - aggregate flows stats of switch
-        uri = path + '/aggregateflow/{dpid}'
+        # GET /monitor/switch/flows/<dpid> - aggregate flows stats of switch
+        uri = path + '/switch/{dpid}/flows'
         mapper.connect('monitor', uri,
                        controller=MonitorController,
-                       action='get_aggregate_flow_stats',
+                       action='get_sw_flows',
                        conditions=dict(method=['GET', 'POST']))
 
-        # GET /stats/table/<dpid> - table of the switch
-        uri = path + '/table/{dpid}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_table_stats',
-                       conditions=dict(method=['GET']))
-
         # GET /stats/port/<dpid> - all ports stats of switchi
-        uri = path + '/ports/{dpid}'
+        uri = path + '/switch/{dpid}/ports'
         mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_ports_stats',
+                       controller=MonitorController, action='get_sw_ports',
                        conditions=dict(method=['GET']))
         
         # GET /stats/port/<dpid>/<port> - single ports stats of switch
-        uri = path + '/port/{dpid}/{port}'
+        uri = path + '/switch/{dpid}/port/{port}'
         mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_port_stats',
+                       controller=MonitorController, action='get_sw_port',
                        conditions=dict(method=['GET']))
 
         # GET /stats/portdesc/<dpid>[/<port_no>] - port details of switch
-        # Note: Specification of port number is optional (OpenFlow 1.5 or later)
-        uri = path + '/portdetails/{dpid}'
+        uri = path + '/switch/{dpid}/portdetails'
         mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_port_desc',
+                       controller=MonitorController, action='get_sw_ports_details',
                        conditions=dict(method=['GET']))
-        uri = path + '/portdetails/{dpid}/{port_no}'
+        uri = path + '/switch/{dpid}/portdetails/{port}'
         mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_port_desc',
+                       controller=MonitorController, action='get_sw_port_details',
                        conditions=dict(method=['GET']))
 
-        # GET /stats/queue/<dpid>[/<port>[/<queue_id>]] - queues stats of switch
-        # Note: Specification of port number and queue id are optional
-        #       If you want to omitting the port number and setting the queue id,
-        #       please specify the keyword "ALL" to the port number
-        #       e.g. GET /stats/queue/1/ALL/1
-        uri = path + '/queue/{dpid}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_queue_stats',
-                       conditions=dict(method=['GET']))
-        uri = path + '/queue/{dpid}/{port}'
-        mapper.connect('stats', uri,
-                       controller=MonitorController, action='get_queue_stats',
-                       conditions=dict(method=['GET']))
-        uri = path + '/queue/{dpid}/{port}/{queue_id}'
-        mapper.connect('stats', uri,
-                       controller=MonitorController, action='get_queue_stats',
-                       conditions=dict(method=['GET']))
-
-        # GET /stats/queueconfig/<dpid>[/<port>] - queues config stats of switch
-        # Note: Specification of port number is optional
-        uri = path + '/queueconfig/{dpid}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_queue_config',
-                       conditions=dict(method=['GET']))
-        uri = path + '/queueconfig/{dpid}/{port}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_queue_config',
-                       conditions=dict(method=['GET']))
-
-        # GET /stats/queuedesc/<dpid>[/<port>[/<queue_id>]] - queues details of the switch
-        # Note: Specification of port number and queue id are optional
-        #       If you want to omitting the port number and setting the queue id,
-        #       please specify the keyword "ALL" to the port number
-        #       e.g. GET /stats/queuedesc/1/ALL/1
-        uri = path + '/queuedetails/{dpid}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_queue_desc',
-                       conditions=dict(method=['GET']))
-        uri = path + '/monitor/{dpid}/{port}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_queue_desc',
-                       conditions=dict(method=['GET']))
-        uri = path + '/monitor/{dpid}/{port}/{queue}'
-        mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_queue_desc',
-                       conditions=dict(method=['GET']))
-
-        
+       
     @set_ev_cls([ofp_event.EventOFPStatsReply,
                  ofp_event.EventOFPDescStatsReply,
                  ofp_event.EventOFPFlowStatsReply,
                  ofp_event.EventOFPAggregateStatsReply,
-                 ofp_event.EventOFPTableStatsReply,
-                 ofp_event.EventOFPTableFeaturesStatsReply,
                  ofp_event.EventOFPPortStatsReply,
-                 ofp_event.EventOFPQueueStatsReply,
-                 ofp_event.EventOFPQueueDescStatsReply,
-                 ofp_event.EventOFPMeterStatsReply,
-                 ofp_event.EventOFPMeterFeaturesStatsReply,
-                 ofp_event.EventOFPMeterConfigStatsReply,
-                 ofp_event.EventOFPGroupStatsReply,
-                 ofp_event.EventOFPGroupFeaturesStatsReply,
-                 ofp_event.EventOFPGroupDescStatsReply,
                  ofp_event.EventOFPPortDescStatsReply
                  ], MAIN_DISPATCHER)
     def stats_reply_handler(self, ev):
@@ -335,23 +203,5 @@ class RestStatsApi(app_manager.RyuApp):
 
         if msg.flags & flags:
             return
-        del self.waiters[dp.id][msg.xid]
-        lock.set()
-
-    @set_ev_cls([ofp_event.EventOFPSwitchFeatures,
-                 ofp_event.EventOFPQueueGetConfigReply,
-                 ofp_event.EventOFPRoleReply,
-                 ], MAIN_DISPATCHER)
-    def features_reply_handler(self, ev):
-        msg = ev.msg
-        dp = msg.datapath
-
-        if dp.id not in self.waiters:
-            return
-        if msg.xid not in self.waiters[dp.id]:
-            return
-        lock, msgs = self.waiters[dp.id][msg.xid]
-        msgs.append(msg)
-
         del self.waiters[dp.id][msg.xid]
         lock.set()
