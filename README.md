@@ -9,11 +9,16 @@ Repository used to develop the project of Communications Project II curricular u
 
 ```ryu-manager tp1_ex1_layer2_controller.py monitor_api.py```
 
-Open your browser at the URL 
+To check all the switches you have in your topology, open your browser at the URL 
 
-```http://127.0.0.1:8080/stats/switches```
+```http://127.0.0.1:8080/monitor/switches```
 
-to check all the switches you have in your topology. Check the code comments for others URI endpoints
+Check the code comments for others URI endpoints
+
+Example of network statistics of port 2 from switch 1:
+
+```http://127.0.0.1:8080/monitor/port/1/2```
+
 
 ### VM image (Virtual Box): 
 
