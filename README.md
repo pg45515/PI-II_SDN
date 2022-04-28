@@ -5,6 +5,9 @@ Repository used to develop the project of Communications Project II curricular u
 
 1. Start some topology with multiple switches with mininet
 
+(download the topology and move it to /mininet/custom directory)
+```sudo python3 mininet/custom/pi_topology.py``` 
+
 2. Run some controller with the monitor code together
 
 ```ryu-manager tp1_ex1_layer2_controller.py monitor_api.py```
