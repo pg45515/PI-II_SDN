@@ -11,7 +11,7 @@ Repository used to develop the project of Communications Project II curricular u
 
 2. Run some controller with the monitor code together
 
-```ryu-manager tp1_ex1_layer2_controller.py monitor_api.py```
+```ryu-manager ryu.app.simple_switch_13 monitor_api.py```
 
 Example to check all the switches you have in your topology, open your browser at the URL: 
 
