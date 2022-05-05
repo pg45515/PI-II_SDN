@@ -114,9 +114,26 @@ class MonitorController(ControllerBase):
         return ofctl.get_port_desc(dp, self.waiters, None)
 
     @monitor_method
-    def get_sw_port_details(self, req, dp, ofctl, port, **kwargs):
-        return ofctl.get_port_desc(dp, self.waiters, port)
-
+    def get_sw_port_detail(self, req, dp, ofctl, port, **kwargs):
+        #return ofctl.get_port_desc(dp, self.waiters, port)
+        tmp = ofctl.get_port_desc(dp, self.waiters, port)
+        sw_id = list(tmp.keys())[0]
+        my_dict = tmp[sw_id]
+        my_port = int(port)
+        final_json = {}
+        LOG.info("MYPORT={}".format(port))
+        for x in my_dict:
+            tmp_json = x
+            LOG.info("PORT={}".format(tmp_json["port_no"]))
+            if tmp_json["port_no"] == 'LOCAL':
+                continue
+            else:
+                tmp_port = int(tmp_json["port_no"])
+            if my_port == tmp_port:
+                LOG.info("TRUE")
+                return tmp_json
+        
+        return final_json
 
 class RestMonitorApi(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
@@ -158,26 +175,26 @@ class RestMonitorApi(app_manager.RyuApp):
                        action='get_sw_flows',
                        conditions=dict(method=['GET', 'POST']))
 
-        # GET /stats/port/<dpid> - all ports stats of switchi
+        # GET /monitor/switch/<dpid>/ports - all ports stats of switchi
         uri = path + '/switch/{dpid}/ports'
         mapper.connect('monitor', uri,
                        controller=MonitorController, action='get_sw_ports',
                        conditions=dict(method=['GET']))
         
-        # GET /stats/port/<dpid>/<port> - single ports stats of switch
+        # GET /monitor/switch/<dpid>/port/<port> - single ports stats of switch
         uri = path + '/switch/{dpid}/port/{port}'
         mapper.connect('monitor', uri,
                        controller=MonitorController, action='get_sw_port',
                        conditions=dict(method=['GET']))
 
-        # GET /stats/portdesc/<dpid>[/<port_no>] - port details of switch
+        # GET /monitor/switch/<dpid>/portdetails - port details of switch
         uri = path + '/switch/{dpid}/portdetails'
         mapper.connect('monitor', uri,
                        controller=MonitorController, action='get_sw_ports_details',
                        conditions=dict(method=['GET']))
-        uri = path + '/switch/{dpid}/portdetails/{port}'
+        uri = path + '/switch/{dpid}/portdetail/{port}'
         mapper.connect('monitor', uri,
-                       controller=MonitorController, action='get_sw_port_details',
+                       controller=MonitorController, action='get_sw_port_detail',
                        conditions=dict(method=['GET']))
 
        
