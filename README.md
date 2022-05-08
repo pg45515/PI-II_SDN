@@ -29,8 +29,9 @@ Example of network statistics of all ports details from switch 3:
 
 Check the code comments for others URI endpoints
 
-### VM image (Virtual Box): 
+### VM images (Virtual Box): 
 
+Fedora with mininet and Ryu:
 https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/EUobulazcKdPo9VWy6h6mVcBCUXDgSMm2Nz_GkCOCNRvrg?e=SSzWbo
 
 password: uminho
@@ -41,6 +42,9 @@ Fedora 34 linux with:
  * WireShark
  * Visual Studio code
  * 3.8 GB of size
+
+CentOS with Zabbix server:
+https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/EXRlbu279vZPinXyK64Imy0Bp9B1ueOKLAmK-1Xbn9YnQA?e=elLmow
 
 ### Mininet emulator:
 
