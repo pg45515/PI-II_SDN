@@ -34,17 +34,27 @@ Check the code comments for others URI endpoints
 Fedora with mininet and Ryu:
 https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/EUobulazcKdPo9VWy6h6mVcBCUXDgSMm2Nz_GkCOCNRvrg?e=SSzWbo
 
-password: uminho
-
-Fedora 34 linux with:
+Fedora 34 linux (password: uminho) with:
  * Mininet 2.3.0
  * Ryu
  * WireShark
  * Visual Studio code
  * 3.8 GB of size
 
-CentOS with Zabbix server:
+CentOS 7 with Zabbix Server 5.0 (password uminho)
 https://uminho365-my.sharepoint.com/:u:/g/personal/pg45517_uminho_pt/EXRlbu279vZPinXyK64Imy0Bp9B1ueOKLAmK-1Xbn9YnQA?e=elLmow
+
+### Setup VM connection:
+
+VirtualBox > Select VM > Settings > Network > Adaptor 2 > Enable and select attached to "Internal Network"
+
+IP for Zabbix VM internal network interface: 10.0.0.1/30
+IP for Fedora VM internal network interface: 10.0.0.2/30
+
+Access Zabbix Server Web GUI through Fedora VM web browser at http://10.0.0.1/zabbix
+
+Zabbix username: Admin
+Zabbix password: zabbix
 
 ### Mininet emulator:
 
