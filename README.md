@@ -34,11 +34,13 @@ Check the code comments for others URI endpoints
 VirtualBox > Select VM > Settings > Network > Adaptor 2 > Enable and select attached to "Internal Network"
 
 IP for Zabbix VM internal network interface: 10.0.0.1/30
+
 IP for Fedora VM internal network interface: 10.0.0.2/30
 
 Access Zabbix Server Web GUI through Fedora VM web browser at http://10.0.0.1/zabbix
 
 Zabbix username: Admin
+
 Zabbix password: zabbix
 
 ### VM images (Virtual Box): 
